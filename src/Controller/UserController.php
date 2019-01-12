@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\EnterCategoryType;
 use App\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -89,6 +90,28 @@ class UserController extends AbstractController
         }
 
         return $this->render('user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/enter-category", name="enter_category", methods={"GET","POST"})
+     */
+    public function enterCategory(Request $request, User $user): Response
+    {
+        $form = $this->createForm(EnterCategoryType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('user_show', [
+                'id' => $user->getId(),
+            ]);
+        }
+
+        return $this->render('user/enter_news.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]);

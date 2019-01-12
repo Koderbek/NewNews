@@ -12,6 +12,10 @@
                     <td>{{ user.login }}</td>
                 </tr>
                 <tr>
+                    <th>Категории новостей</th>
+                    <td>{{ user.newsCategories|join(', ') }}</td>
+                </tr>
+                <tr>
                     <th>Статус</th>
                     <td>{{ user.statusName }}</td>
                 </tr>
@@ -19,6 +23,8 @@
         </table>
 
         <a href="{{ path('user_index') }}">Назад к списку</a>
+
+        <a href="{{ path('enter_category', {'id': user.id}) }}">Сформировть ваши интересы</a>
 
         <a href="{{ path('user_edit', {'id': user.id}) }}">Редактировать</a>
 {% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Категория{% endblock %}
+
+{% block body %}
+    <h1>Категория</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ news_category.id }}</td>
+            </tr>
+            <tr>
+                <th>Название</th>
+                <td>{{ news_category.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('news_category_index') }}">Назад к списку</a>
+
+    <a href="{{ path('news_category_edit', {'id': news_category.id}) }}">Редактировать</a>
+{% endblock %}

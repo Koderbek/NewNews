@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Создание Категории{% endblock %}
+
+{% block body %}
+    <h1>Создание Категории</h1>
+
+    {{ include('news_category/_form.html.twig') }}
+
+    <a href="{{ path('news_category_index') }}">Назад к списку</a>
+{% endblock %}

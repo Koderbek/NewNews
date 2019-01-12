@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use App\Helper\Status\StatusTrait;
 use App\Helper\Status\UserStatus;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -65,10 +66,17 @@ class User implements UserInterface
      */
     protected $roles;
 
+    /**
+     * @var ArrayCollection|NewsCategory[]
+     * @ORM\ManyToMany(targetEntity="NewsCategory")
+     */
+    protected $newsCategories;
+
     public function __construct()
     {
         $this->setStatus(UserStatus::ACTIVE);
         $this->setRoles('ROLE_USER');
+        $this->newsCategories = new ArrayCollection();
     }
 
     /**
@@ -149,6 +157,22 @@ class User implements UserInterface
     public function setRoles(string $roles)
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * @return NewsCategory[]|ArrayCollection
+     */
+    public function getNewsCategories()
+    {
+        return $this->newsCategories;
+    }
+
+    /**
+     * @param NewsCategory[]|ArrayCollection $newsCategories
+     */
+    public function setNewsCategories($newsCategories)
+    {
+        $this->newsCategories = $newsCategories;
     }
 
     /**
