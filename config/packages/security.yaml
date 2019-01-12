@@ -22,7 +22,7 @@ security:
                 check_path: login
             logout:
                 path:   /logout
-                target: /
+                target: /login
                 invalidate_session: true
 
             # activate different ways to authenticate
