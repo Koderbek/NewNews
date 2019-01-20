@@ -6,7 +6,7 @@
     <h1>Выбор категорий</h1>
 
     {{ form_start(form) }}
-        {{ form_widget(form) }}
+        {{ form_widget(form.newsCategories) }}
         <button class="btn">{{ button_label|default('Сохранить') }}</button>
     {{ form_end(form) }}
 

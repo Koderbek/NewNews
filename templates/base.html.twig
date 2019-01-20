@@ -19,22 +19,28 @@
 <body>
 {% block header %}
     <nav class="navbar navbar-default">
-        <div class="container-fluid" style="background-color: darkslateblue">
-            <div class="navbar-header">
+        <div class="container-fluid" style="background-color: #505050">
+            <label class="navbar-header">
                 {% if app.user %}
-                    <a class="navbar-brand" href="{{ path('logout') }}"><div class="text-danger">Выйти</div></a>
-                    <a class="navbar-brand" href="{{ path('user_show', {'id': app.user.id}) }}"><div class="text-success">{{ app.user.login }}</div></a>
+                    <a class="navbar-brand" href="{{ path('logout') }}"><p style="color: #FFFFFF">Выйти</p></a>
+                    <a class="navbar-brand" href="{{ path('user_show', {'id': app.user.id}) }}"><p style="color: #FFE484">{{ app.user.login }}</p></a>
                 {% else %}
-                    <a class="navbar-brand" href="{{ path('login') }}"><div class="text-danger">Войти</div></a>
-                    <a class="navbar-brand" href="{{ path('user_index') }}"><div class="text-success">Склад</div></a>
+                    <a class="navbar-brand" href="{{ path('login') }}"><p style="color: #73C347">Войти</p></a>
+                    <a class="navbar-brand" href="{{ path('user_index') }}"><p style="color: #FFE484">Склад</p></a>
                 {% endif %}
-            </div>
+            </label>
 
-            {#<div>#}
-                {#<ul class="nav navbar-nav">#}
-                    {#<li><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.login }}</a></li>#}
-                {#</ul>#}
-            {#</div>#}
+            <div>
+                <ul class="nav navbar-nav">
+                    {% if app.user %}
+                        <li>
+                            <a href="{{ path('news_category_index') }}" style="color: lightgray">
+                                Категории новостей
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 {% endblock %}
