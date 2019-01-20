@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ news.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{ news.title }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Заголовок</th>
+                <td>{{ news.title }}</td>
+            </tr>
+            <tr>
+                <th>Новость</th>
+                <td>{{ news.news }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('news_index') }}">Назад к списку</a>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Список новостей{% endblock %}
+
+{% block body %}
+    <h1>Список новостей</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Заголовок</th>
+                <th>Новость</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for news in news %}
+            <tr>
+                <td><a href="{{ path('news_show', {'id': news.id}) }}">{{ news.title }}</a></td>
+                <td>{{ news.news }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Список пуст</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
