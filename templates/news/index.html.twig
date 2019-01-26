@@ -3,8 +3,8 @@
 {% block title %}Список новостей{% endblock %}
 
 {% block body %}
+    <a href="{{ path('news_index') }}">Обновить ленту</a>
     <h1>Список новостей</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -13,10 +13,15 @@
             </tr>
         </thead>
         <tbody>
-        {% for news in news %}
+        {% for item in items %}
             <tr>
-                <td><a href="{{ path('news_show', {'id': news.id}) }}">{{ news.title }}</a></td>
-                <td>{{ news.news }}</td>
+                <td>
+                    <label style="color: #2398D6">
+                        {{ item.title }}
+                    </label>
+                    <label>Дата публикации: {{ item.pubDate|date('d-m-Y H:m') }}</label>
+                </td>
+                <td><label>{{ item.description }}</label></td>
             </tr>
         {% else %}
             <tr>
