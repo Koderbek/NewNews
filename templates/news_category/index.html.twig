@@ -8,15 +8,15 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Название</th>
+                <th>Английское название</th>
             </tr>
         </thead>
         <tbody>
         {% for news_category in news_categories %}
             <tr>
-                <td>{{ news_category.id }}</td>
                 <td><a href="{{ path('news_category_show', {'id': news_category.id}) }}">{{ news_category.name }}</a></td>
+                <td>{{ news_category.englishName }}</td>
             </tr>
         {% else %}
             <tr>

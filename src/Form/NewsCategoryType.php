@@ -13,6 +13,7 @@ class NewsCategoryType extends AbstractType
     {
         $builder
             ->add('name', null, ['label' => 'Название'])
+            ->add('englishName', null, ['label' => 'Английское название'])
         ;
     }
 

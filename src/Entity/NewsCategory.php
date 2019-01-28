@@ -36,6 +36,13 @@ class NewsCategory
     protected $name;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Заполните поле")
+     */
+    protected $englishName;
+
+    /**
      * @var News|null
      * @ORM\OneToMany(targetEntity="News", mappedBy="category")
      */
@@ -87,6 +94,22 @@ class NewsCategory
     public function setNews(?News $news)
     {
         $this->news = $news;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEnglishName(): ?string
+    {
+        return $this->englishName;
+    }
+
+    /**
+     * @param null|string $englishName
+     */
+    public function setEnglishName(?string $englishName): void
+    {
+        $this->englishName = $englishName;
     }
 
     public function __toString()
