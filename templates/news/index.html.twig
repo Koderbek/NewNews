@@ -1,13 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Список новостей{% endblock %}
+{% block title %}Новостная лента{% endblock %}
 
 {% block body %}
-    <a href="{{ path('news_index') }}">Обновить ленту</a>
-    {% if app.user and app.user.newsCategories %}
+    {% if app.user and app.user.newsCategories.count >=1 %}
         {% set categories = app.user.newsCategories %}
         <div class="dropdown">
-            <a id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <a style="color: #505050" id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown">
                 Фильтр
                 <span class="caret"></span>
             </a>
@@ -20,7 +19,7 @@
             </ul>
         </div>
     {% endif %}
-    <h1>Список новостей</h1>
+    <h1>Новостная лента</h1>
     <table class="table">
         <thead>
             <tr>

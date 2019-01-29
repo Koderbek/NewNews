@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\NewsCategory;
 use App\Form\NewsCategoryType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,6 +17,7 @@ class NewsCategoryController extends AbstractController
 {
     /**
      * @Route("/", name="news_category_index", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(): Response
     {
@@ -30,6 +32,7 @@ class NewsCategoryController extends AbstractController
 
     /**
      * @Route("/new", name="news_category_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request): Response
     {
@@ -53,6 +56,7 @@ class NewsCategoryController extends AbstractController
 
     /**
      * @Route("/{id}", name="news_category_show", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function show(NewsCategory $newsCategory): Response
     {
@@ -63,6 +67,7 @@ class NewsCategoryController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="news_category_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, NewsCategory $newsCategory): Response
     {

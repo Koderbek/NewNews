@@ -7,5 +7,5 @@
 
     {{ include('user/_form.html.twig', {'button_label': 'Обновить'}) }}
 
-    <a href="{{ path('user_index') }}">Назад к списку</a>
+    <a href="{{ path('user_show', {'id': user.id}) }}">Назад</a>
 {% endblock %}
