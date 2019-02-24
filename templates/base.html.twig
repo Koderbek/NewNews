@@ -35,13 +35,11 @@
                                 Новостная лента
                             </a>
                         </li>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <li>
-                                <a href="{{ path('news_category_index') }}" style="color: lightgray">
-                                    Категории
-                                </a>
-                            </li>
-                        {% endif %}
+                        <li>
+                            <a href="{{ path('news_category_index') }}" style="color: lightgray">
+                                Категории
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>

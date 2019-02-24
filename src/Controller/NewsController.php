@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+//include 'phpQuery/phpQuery.php';
+
 /**
  * @Route("/news")
  */
@@ -34,7 +36,7 @@ class NewsController extends AbstractController
             $items = $items->channel->item;
 
             foreach ($items as $item){
-                $item->description = str_replace('&quot;', '', $item->description);
+                $item->description = html_entity_decode($item->description);
                 $allItems[] = $item;
             }
 
@@ -60,11 +62,27 @@ class NewsController extends AbstractController
         $items = $items->channel->item;
 
         foreach ($items as $item){
-            $item->description = str_replace('&quot;', '', $item->description);
+            $item->description = html_entity_decode($item->description);
+            $link = $item->link;
         }
 
         return $this->render('news/index.html.twig', [
             'items' => $items,
         ]);
+    }
+
+    /**
+     * @Route("/show-original/{link}", name="show_original", methods={"GET"})
+     */
+    public function showOriginal(Request $request): Response
+    {
+        $link = $request->get('link');
+        $link = urldecode($link);
+
+        $html = file_get_contents($link);
+        $page = \phpQuery::newDocument($html);
+        $href = $page->find('.doc__content')->find('a')->attr('href');
+
+        return $this->redirect($href);
     }
 }

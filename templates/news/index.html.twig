@@ -32,7 +32,7 @@
             <tr>
                 <td>
                     <label style="color: #2398D6">
-                        <a href="{{ item.link }}">{{ item.title }}</a>
+                        <a href="{{ path('show_original', {'link': item.link|url_encode}) }}">{{ item.title }}</a>
                     </label>
                     <label>Дата публикации: {{ item.pubDate|date('d-m-Y H:m') }}</label>
                 </td>

@@ -77,6 +77,9 @@
     "egulias/email-validator": {
         "version": "2.1.7"
     },
+    "electrolinux/phpquery": {
+        "version": "0.9.6"
+    },
     "facebook/webdriver": {
         "version": "1.6.0"
     },
@@ -127,6 +130,9 @@
             "version": "5.2",
             "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
         }
+    },
+    "simple-html-dom/simple-html-dom": {
+        "version": "1.5.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.3"
