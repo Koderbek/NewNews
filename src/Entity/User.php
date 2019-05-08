@@ -46,6 +46,12 @@ class User implements UserInterface
     protected $login;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $city;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="password", type="string")
@@ -71,6 +77,12 @@ class User implements UserInterface
      * @ORM\ManyToMany(targetEntity="NewsCategory")
      */
     protected $newsCategories;
+
+    /**
+     * @var DayInformation|null
+     * @ORM\OneToOne(targetEntity="DayInformation", mappedBy="user")
+     */
+    protected $information;
 
     public function __construct()
     {
@@ -173,6 +185,38 @@ class User implements UserInterface
     public function setNewsCategories($newsCategories)
     {
         $this->newsCategories = $newsCategories;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param null|string $city
+     */
+    public function setCity(?string $city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return DayInformation|null
+     */
+    public function getInformation()
+    {
+        return $this->information;
+    }
+
+    /**
+     * @param DayInformation|null $information
+     */
+    public function setInformation(?DayInformation $information)
+    {
+        $this->information = $information;
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DayInformation;
 use App\Entity\News;
 use App\Form\NewsType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,6 +24,25 @@ class NewsController extends AbstractController
     public function index(): Response
     {
         $user = $this->getUser();
+        $information = $user->getInformation();
+        if($information == null){
+            $information = new DayInformation();
+            $information->setUser($user);
+            $this->getDoctrine()->getManager()->persist($information);
+        }
+
+        if ($information->getUsd() == null || $information->getEur() == null) {
+            $cbrURL = "https://www.cbr-xml-daily.ru/daily_json.js";
+            $courseJSON = file_get_contents($cbrURL);
+            $courses = json_decode($courseJSON);
+            $usd = $courses->Valute->USD->Value;
+            $eur = $courses->Valute->EUR->Value;
+
+            $information->setUsd($usd);
+            $information->setEur($eur);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
         $categories = $user->getNewsCategories();
         $allItems = [];
 

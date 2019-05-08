@@ -3,6 +3,13 @@
 {% block title %}Новостная лента{% endblock %}
 
 {% block body %}
+    <h4>Курс валют</h4>
+    <h5>
+        USD: {{ app.user.information.usd }}
+        <br>
+        EUR: {{ app.user.information.eur }}
+    </h5>
+    <br>
     {% if app.user and app.user.newsCategories.count >=1 %}
         {% set categories = app.user.newsCategories %}
         <div class="dropdown">

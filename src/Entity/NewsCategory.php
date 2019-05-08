@@ -43,12 +43,6 @@ class NewsCategory
     protected $englishName;
 
     /**
-     * @var News|null
-     * @ORM\OneToMany(targetEntity="News", mappedBy="category")
-     */
-    protected $news;
-
-    /**
      * @return int
      */
     public function getId()
@@ -78,22 +72,6 @@ class NewsCategory
     public function setName(string $name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return News|null
-     */
-    public function getNews(): ?News
-    {
-        return $this->news;
-    }
-
-    /**
-     * @param News|null $news
-     */
-    public function setNews(?News $news)
-    {
-        $this->news = $news;
     }
 
     /**
