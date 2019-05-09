@@ -23,26 +23,10 @@ class NewsController extends AbstractController
      */
     public function index(): Response
     {
+        //Установка валюты
+        $this->rate();
+
         $user = $this->getUser();
-        $information = $user->getInformation();
-        if($information == null){
-            $information = new DayInformation();
-            $information->setUser($user);
-            $this->getDoctrine()->getManager()->persist($information);
-        }
-
-        if ($information->getUsd() == null || $information->getEur() == null) {
-            $cbrURL = "https://www.cbr-xml-daily.ru/daily_json.js";
-            $courseJSON = file_get_contents($cbrURL);
-            $courses = json_decode($courseJSON);
-            $usd = $courses->Valute->USD->Value;
-            $eur = $courses->Valute->EUR->Value;
-
-            $information->setUsd($usd);
-            $information->setEur($eur);
-            $this->getDoctrine()->getManager()->flush();
-        }
-
         $categories = $user->getNewsCategories();
         $allItems = [];
 
@@ -104,5 +88,63 @@ class NewsController extends AbstractController
         $href = $page->find('.doc__content')->find('a')->attr('href');
 
         return $this->redirect($href);
+    }
+
+    protected function rate()
+    {
+        $user = $this->getUser();
+        $information = $user->getInformation();
+        if($information == null){
+            $information = new DayInformation();
+            $information->setUser($user);
+            $this->getDoctrine()->getManager()->persist($information);
+        }
+
+        if ((($information->getDate() - time()) < 43200)
+            || ($information->getUsd() == null)
+            || ($information->getEur() == null))
+        {
+            $cbrURL = "https://www.cbr-xml-daily.ru/daily_json.js";
+            $courseJSON = file_get_contents($cbrURL);
+            $courses = json_decode($courseJSON);
+            $usd = $courses->Valute->USD->Value;
+            $eur = $courses->Valute->EUR->Value;
+
+            $information->setDate(time());
+            $information->setUsd($usd);
+            $information->setEur($eur);
+
+            //Установка погоды
+            $this->weather($information);
+
+            $this->getDoctrine()->getManager()->flush();
+        }
+    }
+
+    protected function weather(DayInformation $information)
+    {
+        $userCity = $this->getUser()->getCity();
+        $filePath = __DIR__ . '\..\..\public\uploads\cities.xml';
+        if (file_exists($filePath)){
+            $file = file_get_contents($filePath);
+            $cities = new \SimpleXMLElement($file);
+            foreach ($cities as $city){
+                if($city == $userCity){
+                    $cityId = $city['id'];
+                    $url = 'https://meteoinfo.ru/rss/forecasts/index.php?s=' . $cityId;
+                    $content = file_get_contents($url);
+                    $items = new \SimpleXMLElement($content);
+                    $items = $items->channel->item;
+                    $item = $items[0];
+                    $weather = $item->description;
+                    $metcast = explode('. ', $weather);
+                    $information->setPrecipitation($metcast[0]);
+                    $information->setTemperature($metcast[1]);
+                    $information->setWind($metcast[2]);
+                    break;
+                }
+            }
+        }
+        return $information;
     }
 }

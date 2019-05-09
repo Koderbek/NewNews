@@ -21,20 +21,35 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid" style="background-color: #505050">
             <label class="navbar-header">
-                <a class="navbar-brand"><p style="color: #FFFFFF">NewNews</p></a>
                 {% if app.user %}
+                    <a href="{{ path('news_index') }}" class="navbar-brand"><p style="color: #FFFFFF">Главная</p></a>
                     <a class="navbar-brand" href="{{ path('user_show', {'id': app.user.id}) }}"><p style="color: #FFE484">{{ app.user.login }}</p></a>
+                {% else %}
+                    <a class="navbar-brand"><p style="color: #FFFFFF">NewNews</p></a>
                 {% endif %}
             </label>
 
             <div>
                 <ul class="nav navbar-nav">
                     {% if app.user %}
-                        <li>
-                            <a href="{{ path('news_index') }}" style="color: lightgray">
-                                Новостная лента
-                            </a>
-                        </li>
+                        {% if app.user.information %}
+                            <li><a style="color: lightgray"><b>Курс валют:</b></a></li>
+                            {% if app.user.information.usd %}
+                                <li>
+                                    <a style="color: lightgray">
+                                        USD - {{ app.user.information.usd }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if app.user.information.eur %}
+                            <li>
+                                <a style="color: lightgray">
+                                   EUR - {{ app.user.information.eur }}
+                                </a>
+                            </li>
+                            {% endif %}
+                        {% endif %}
                     {% endif %}
                 </ul>
             </div>

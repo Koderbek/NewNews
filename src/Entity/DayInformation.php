@@ -41,13 +41,36 @@ class DayInformation
      * @var string|null
      * @ORM\Column(type="string", nullable=true)
      */
-    protected $weather;
+    protected $precipitation;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $temperature;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $wind;
+
+    /**
+     * @var integer|null
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    protected $date;
 
     /**
      * @var User|null
      * @ORM\OneToOne(targetEntity="User", inversedBy="information")
      */
     protected $user;
+
+    public function __construct()
+    {
+        $this->date = time();
+    }
 
     /**
      * @return int
@@ -100,17 +123,65 @@ class DayInformation
     /**
      * @return null|string
      */
-    public function getWeather()
+    public function getPrecipitation()
     {
-        return $this->weather;
+        return $this->precipitation;
     }
 
     /**
-     * @param null|string $weather
+     * @param null|string $precipitation
      */
-    public function setWeather(?string $weather)
+    public function setPrecipitation(?string $precipitation)
     {
-        $this->weather = $weather;
+        $this->precipitation = $precipitation;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getTemperature()
+    {
+        return $this->temperature;
+    }
+
+    /**
+     * @param null|string $temperature
+     */
+    public function setTemperature(?string $temperature)
+    {
+        $this->temperature = $temperature;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWind()
+    {
+        return $this->wind;
+    }
+
+    /**
+     * @param null|string $wind
+     */
+    public function setWind(?string $wind)
+    {
+        $this->wind = $wind;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param int|null $date
+     */
+    public function setDate(?int $date)
+    {
+        $this->date = $date;
     }
 
     /**
