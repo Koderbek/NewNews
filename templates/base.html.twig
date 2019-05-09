@@ -5,36 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Склад{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
 {% block header %}
     <nav class="navbar navbar-default">
-        <div class="container-fluid" style="background-color: darkslateblue">
-            <div class="navbar-header">
+        <div class="container-fluid" style="background-color: #505050">
+            <label class="navbar-header">
                 {% if app.user %}
-                    <a class="navbar-brand" href="{{ path('logout') }}"><div class="text-danger">Выйти</div></a>
-                    <a class="navbar-brand" href="{{ path('user_show', {'id': app.user.id}) }}"><div class="text-success">{{ app.user.login }}</div></a>
+                    <a href="{{ path('news_index') }}" class="navbar-brand"><p style="color: #FFFFFF">Главная</p></a>
+                    <a class="navbar-brand" href="{{ path('user_show', {'id': app.user.id}) }}"><p style="color: #FFE484">{{ app.user.login }}</p></a>
                 {% else %}
-                    <a class="navbar-brand" href="{{ path('login') }}"><div class="text-danger">Войти</div></a>
-                    <a class="navbar-brand" href="{{ path('user_index') }}"><div class="text-success">Склад</div></a>
+                    <a class="navbar-brand"><p style="color: #FFFFFF">NewNews</p></a>
                 {% endif %}
-            </div>
+            </label>
 
-            {#<div>#}
-                {#<ul class="nav navbar-nav">#}
-                    {#<li><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.login }}</a></li>#}
-                {#</ul>#}
-            {#</div>#}
+            <div>
+                <ul class="nav navbar-nav">
+                    {% if app.user %}
+                        {% if app.user.information %}
+                            <li><a style="color: lightgray"><b>Курс валют:</b></a></li>
+                            {% if app.user.information.usd %}
+                                <li>
+                                    <a style="color: lightgray">
+                                        USD - {{ app.user.information.usd }}
+                                    </a>
+                                </li>
+                            {% endif %}
+
+                            {% if app.user.information.eur %}
+                            <li>
+                                <a style="color: lightgray">
+                                   EUR - {{ app.user.information.eur }}
+                                </a>
+                            </li>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </ul>
+            </div>
         </div>
     </nav>
 {% endblock %}

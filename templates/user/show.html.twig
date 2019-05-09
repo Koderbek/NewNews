@@ -1,24 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ user.login }}{% endblock %}
+{% block title %}{{ app.user.login }}{% endblock %}
 
 {% block body %}
-        <h1>{{ user.login }}</h1>
+    {% if user.newsCategories.count >= 1 %}
+        <button type="button" class="btn">
+            <a style="color: #505050" href="{{ path('enter_category', {'id': user.id}) }}">Изменить интересы</a>
+        </button>
+    {% endif %}
 
-        <table class="table table-bordered">
-            <tbody>
-                <tr>
-                    <th>Login</th>
-                    <td>{{ user.login }}</td>
-                </tr>
-                <tr>
-                    <th>Статус</th>
-                    <td>{{ user.statusName }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <button type="button" class="btn">
+        <a style="color: #505050" href="{{ path('user_edit', {'id': user.id}) }}">Редактировать профиль</a>
+    </button>
 
-        <a href="{{ path('user_index') }}">Назад к списку</a>
-
-        <a href="{{ path('user_edit', {'id': user.id}) }}">Редактировать</a>
+    <h2>Login: {{ app.user.login }}</h2>
+    <h3>Категории:
+        {% if user.newsCategories.count >= 1 %}
+            {{ user.newsCategories|join(', ') }}
+        {% else %}
+            Пусто!
+            <a href="{{ path('enter_category', {'id': user.id}) }}">
+                Сформировать интересы?
+            </a>
+        {% endif %}
+    </h3>
+    <button type="button" class="btn btn-outline-secondary btn-sm">
+        <a style="color: #505050" href="{{ path('logout') }}">Выход</a>
+    </button>
 {% endblock %}

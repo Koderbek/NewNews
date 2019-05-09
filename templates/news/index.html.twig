@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Новостная лента{% endblock %}
+
+{% block body %}
+    <h4>Погода на сегодня:</h4>
+    <h5>
+        <b>Температура:</b> {{ app.user.information.temperature }}
+        <br>
+        <b>Осадки:</b> {{ app.user.information.precipitation }}
+        <br>
+        <b>Ветер:</b> {{ app.user.information.wind }}
+    </h5>
+    <br>
+    <h1>Новостная лента</h1>
+    {% if app.user and app.user.newsCategories.count >=1 %}
+        {% set categories = app.user.newsCategories %}
+        <div class="dropdown">
+            <a style="color: darkgreen" id="drop1" href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <b>Фильтр</b>
+                <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{{ path('news_index') }}">Сбросить</a></li>
+                <li class="divider"></li>
+                {% for category in categories %}
+                    <li><a href="{{ path('news_filter', {'category': category.englishName}) }}">{{ category }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <table class="table">
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td>
+                    <label style="color: #2398D6">
+                        <a href="{{ path('show_original', {'link': item.link|url_encode}) }}">{{ item.title }}</a>
+                    </label>
+                    <label>Дата публикации: {{ item.pubDate|date('d-m-Y H:m') }}</label>
+                </td>
+                <td><label>{{ item.description }}</label></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Список пуст</td>
+            </tr>
+            <td colspan="4">
+                <a href="{{ path('enter_category', {'id': app.user.id}) }}">Сформировать интересы</a>
+            </td>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

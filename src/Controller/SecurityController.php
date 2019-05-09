@@ -8,6 +8,8 @@
 
 namespace App\Controller;
 
+use App\Entity\DayInformation;
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,10 +34,20 @@ class SecurityController extends Controller
 
     /**
      *
-     * @Route("/logout", name="logout")
+     * @Route("/logout/", name="logout")
      */
     public function logout()
     {
+        $user = $this->getUser();
+        $em = $this->getDoctrine()->getManager();
+
+        $information = $em->getRepository(DayInformation::class)->findOneByUser($user->getId());
+        $information->setUsd(null);
+        $information->setEur(null);
+        $information->setWeather(null);
+
+        $em->flush();
+
         return $this->redirectToRoute('login');
     }
 }

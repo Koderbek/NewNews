@@ -11,6 +11,7 @@ namespace App\Entity;
 
 use App\Helper\Status\StatusTrait;
 use App\Helper\Status\UserStatus;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -45,6 +46,12 @@ class User implements UserInterface
     protected $login;
 
     /**
+     * @var string|null
+     * @ORM\Column(type="string", nullable=true)
+     */
+    protected $city;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="password", type="string")
@@ -65,10 +72,23 @@ class User implements UserInterface
      */
     protected $roles;
 
+    /**
+     * @var ArrayCollection|NewsCategory[]
+     * @ORM\ManyToMany(targetEntity="NewsCategory")
+     */
+    protected $newsCategories;
+
+    /**
+     * @var DayInformation|null
+     * @ORM\OneToOne(targetEntity="DayInformation", mappedBy="user")
+     */
+    protected $information;
+
     public function __construct()
     {
         $this->setStatus(UserStatus::ACTIVE);
         $this->setRoles('ROLE_USER');
+        $this->newsCategories = new ArrayCollection();
     }
 
     /**
@@ -149,6 +169,54 @@ class User implements UserInterface
     public function setRoles(string $roles)
     {
         $this->roles = $roles;
+    }
+
+    /**
+     * @return NewsCategory[]|ArrayCollection
+     */
+    public function getNewsCategories()
+    {
+        return $this->newsCategories;
+    }
+
+    /**
+     * @param NewsCategory[]|ArrayCollection $newsCategories
+     */
+    public function setNewsCategories($newsCategories)
+    {
+        $this->newsCategories = $newsCategories;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param null|string $city
+     */
+    public function setCity(?string $city)
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return DayInformation|null
+     */
+    public function getInformation()
+    {
+        return $this->information;
+    }
+
+    /**
+     * @param DayInformation|null $information
+     */
+    public function setInformation(?DayInformation $information)
+    {
+        $this->information = $information;
     }
 
     /**

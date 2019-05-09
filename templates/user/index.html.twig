@@ -10,6 +10,7 @@
             <tr>
                 <th>Id</th>
                 <th>Login</th>
+                <th>Категории</th>
                 <th>Статус</th>
             </tr>
         </thead>
@@ -18,6 +19,7 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td><a href="{{ path('user_show', {'id': user.id}) }}">{{ user.login }}</a></td>
+                <td>{{ user.newsCategories|join(', ')}}</td>
                 <td>{{ user.statusName}}</td>
             </tr>
         {% else %}
@@ -28,5 +30,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('user_new') }}">Создать</a>
+    <a href="{{ path('user_new') }}">Добавить</a>
 {% endblock %}
