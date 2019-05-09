@@ -3,15 +3,18 @@
 {% block title %}Новостная лента{% endblock %}
 
 {% block body %}
-    <h4>Погода на сегодня:</h4>
-    <h5>
-        <b>Температура:</b> {{ app.user.information.temperature }}
-        <br>
-        <b>Осадки:</b> {{ app.user.information.precipitation }}
-        <br>
-        <b>Ветер:</b> {{ app.user.information.wind }}
-    </h5>
-    <br>
+    {% if app.user.information %}
+        <h4>Погода на сегодня:</h4>
+        {% if app.user.information.temperature %}
+            <h5>
+                <b>Температура:</b> {{ app.user.information.temperature }}
+                <br>
+                <b>Осадки:</b> {{ app.user.information.precipitation }}
+                <br>
+                <b>Ветер:</b> {{ app.user.information.wind }}
+            </h5>
+        {% endif %}
+    {% endif %}
     <h1>Новостная лента</h1>
     {% if app.user and app.user.newsCategories.count >=1 %}
         {% set categories = app.user.newsCategories %}

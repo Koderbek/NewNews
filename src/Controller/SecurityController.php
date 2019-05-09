@@ -38,16 +38,6 @@ class SecurityController extends Controller
      */
     public function logout()
     {
-        $user = $this->getUser();
-        $em = $this->getDoctrine()->getManager();
-
-        $information = $em->getRepository(DayInformation::class)->findOneByUser($user->getId());
-        $information->setUsd(null);
-        $information->setEur(null);
-        $information->setWeather(null);
-
-        $em->flush();
-
         return $this->redirectToRoute('login');
     }
 }

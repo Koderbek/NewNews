@@ -14,6 +14,7 @@
     </button>
 
     <h2>Login: {{ app.user.login }}</h2>
+    <h3>Ваш город: {{ app.user.city }}</h3>
     <h3>Категории:
         {% if user.newsCategories.count >= 1 %}
             {{ user.newsCategories|join(', ') }}

@@ -115,16 +115,21 @@ class NewsController extends AbstractController
             $information->setEur($eur);
 
             //Установка погоды
-            $this->weather($information);
+            $weather = $this->weather();
+
+            $information->setPrecipitation($weather[0]);
+            $information->setTemperature($weather[1]);
+            $information->setWind($weather[2]);
 
             $this->getDoctrine()->getManager()->flush();
         }
     }
 
-    protected function weather(DayInformation $information)
+    protected function weather()
     {
         $userCity = $this->getUser()->getCity();
         $filePath = __DIR__ . '\..\..\public\uploads\cities.xml';
+        $metcast = [];
         if (file_exists($filePath)){
             $file = file_get_contents($filePath);
             $cities = new \SimpleXMLElement($file);
@@ -138,13 +143,10 @@ class NewsController extends AbstractController
                     $item = $items[0];
                     $weather = $item->description;
                     $metcast = explode('. ', $weather);
-                    $information->setPrecipitation($metcast[0]);
-                    $information->setTemperature($metcast[1]);
-                    $information->setWind($metcast[2]);
                     break;
                 }
             }
         }
-        return $information;
+        return $metcast;
     }
 }
